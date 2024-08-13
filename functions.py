@@ -33,7 +33,7 @@ def min(df):
 
 def max(df):
     df = pd.to_numeric(df, errors='coerce')
-    max_value = df[0]
+    max_value = df.iloc[0]
     for i in df:
         if i > max_value:
             max_value = i
@@ -51,6 +51,8 @@ def percentile(df, p):
         return lower + (upper - lower) * (int(index) % 1)
     
 def sum(df):
+    if np.isscalar(df):
+        return df
     df = pd.to_numeric(df, errors='coerce')
     total_sum = 0
     for i in df:
