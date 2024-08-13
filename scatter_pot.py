@@ -18,7 +18,7 @@ except FileNotFoundError:
 
 df = df.select_dtypes(include=[np.number]) #Seleccionar columnas numericas
 
-#Crear una matriz de correlacion manualmente
+#Crear una matriz de correlacion
 correlation_matrix = df.corr()
 
 #Encontrar el par de caracteristicas co la correlacion mas alta(absoluta)
