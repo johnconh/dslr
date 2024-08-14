@@ -21,7 +21,6 @@ courses=[
     'Transfiguration', 'Potions', 'Care of Magical Creatures', 'Charms', 'Flying'
 ]
 
-
 house_column = ['Hogwarts House']
 
 df = df.dropna(subset=house_column+ courses) #Filtrar las filas con datos numericos validos
