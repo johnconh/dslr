@@ -17,7 +17,7 @@ except FileNotFoundError:
     print('File not found')
     sys.exit(1)
 
-df = df.select_dtypes(include=[np.number]) #Seleccionar columnas numericas
+df = df.select_dtypes(include=[np.number])
 
 sns.pairplot(df)
 plt.suptitle('Pair Plot of Numerical Features', y=1.02)
