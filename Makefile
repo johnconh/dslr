@@ -1,12 +1,11 @@
 all:
-	docker-compose -f docker-compose.yml  up -d --build
-
-exec:
-	docker exec -it python /bin/bash
+	docker compose up -d
 
 down:
-	docker-compose -f docker-compose.yml  down
-	
+	docker compose down
+
+exec:
+	docker exec -it python bash
+
 clean: down
 	yes | docker system prune -a
-

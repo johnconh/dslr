@@ -1,30 +1,42 @@
 import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
 import seaborn as sns
-import sys
+import matplotlib.pyplot as plt
 import os
+import sys
 
-try:
-    filesys = sys.argv[1]
-except IndexError:
-    print('No file provided')
-    sys.exit(1)
+def plot_all_scatters_in_one(path: str):
+    
+    try:
+        df = pd.read_csv(path)
+    except FileNotFoundError:
+        print('File not found')
+        sys.exit(1)
 
-try:
-    df = pd.read_csv(filesys)
-except FileNotFoundError:
-    print('File not found')
-    sys.exit(1)
+    numerical_df = df.select_dtypes(include=[float, int])
+    
+    numerical_df['Hogwarts House'] = df['Hogwarts House']
 
-df = df.select_dtypes(include=[np.number])
+    output_dir = "pair_plots"
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
 
-sns.pairplot(df)
-plt.suptitle('Pair Plot of Numerical Features', y=1.02)
+    pairplot = sns.pairplot(numerical_df, hue='Hogwarts House', palette={
+        'Gryffindor': 'red',
+        'Hufflepuff': 'yellow',
+        'Ravenclaw': 'blue',
+        'Slytherin': 'green'
+    })
 
-output_dir='pair_plot'
-os.makedirs(output_dir, exist_ok=True)
+    pairplot.savefig(f"{output_dir}/pairplot_all_features.png")
 
-output_path= os.path.join(output_dir, 'pair_plot.png')
-plt.savefig(output_path)
-plt.close()
+
+if __name__ == "__main__":
+    
+    try:
+        path = sys.argv[1]
+
+        plot_all_scatters_in_one(path)
+        
+    except IndexError:
+        print('No file provided')
+        sys.exit(1)
